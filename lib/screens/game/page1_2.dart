@@ -1,27 +1,49 @@
 
 import 'dart:math' as math;
 import 'dart:ui';
+import 'package:animated_background/animated_background.dart';
+import 'package:animated_background/particles.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:pravda_or_deistvie/screens/game/list.dart';
+import 'package:pravda_or_deistvie/screens/game/gamedata/list.dart';
+import 'package:pravda_or_deistvie/screens/game/init/pushError.dart';
 import 'package:pravda_or_deistvie/screens/game/sprav.dart';
 import 'package:pravda_or_deistvie/screens/game/card_pages.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:pravda_or_deistvie/screens/Home.dart';
 
-import 'cards_stylersplayer.dart';
+import 'style/cards_stylersplayer.dart';
 
 class page1_2 extends StatefulWidget {
-  const page1_2({super.key});
+  const page1_2({super.key,
+    required this.array_vopros,
+    required this.array_vopros_destvie,
+  });
+  final List<String> array_vopros;
+  final List<String> array_vopros_destvie;
+
 
   @override
   State<page1_2> createState() => _page1_2State();
 }
 
-class _page1_2State extends State<page1_2> {
+class _page1_2State extends State<page1_2> with TickerProviderStateMixin {
   final CardSwiperController controller = CardSwiperController();
   final TextEditingController controller_text = TextEditingController();
   math.Random random = new math.Random();
+  ParticleOptions particles = const ParticleOptions(
+        baseColor: Colors.blueAccent,
+        spawnOpacity: 0.0,
+        opacityChangeRate: 0.1,
+        minOpacity: 0.9,
+        maxOpacity: 0.9,
+        particleCount: 70,
+        spawnMaxRadius: 15.0,
+        spawnMaxSpeed: 100.0,
+        spawnMinSpeed: 30,
+        spawnMinRadius: 7.0,
+      );
+
   var array_deistvie = [""];
   var name = 'Перед началом посмотрите правила';
   String swiper_cards = "";
@@ -70,13 +92,13 @@ class _page1_2State extends State<page1_2> {
       if(crug < 2){
         crug += 1;
       }else{
-        if(isencition != array_vopros_destvie1_2.length){
+        if(isencition !=  widget.array_vopros_destvie.length){
           state_0();
           // rand_numbers2();
           int cacheStat = list2[isencition];
           cards.clear();
           count += 1;
-          cards.add(cards_widgets(player:player_number,name:array_vopros_destvie1_2[cacheStat],));
+          cards.add(cards_widgets(player:player_number,name: widget.array_vopros_destvie[cacheStat],));
           state_0();
           cards.add(cards_widgets(player: player_number,name: "Правда или Действие ?",));
           isencition++;
@@ -93,12 +115,12 @@ class _page1_2State extends State<page1_2> {
       if(crug < 2){
         crug += 1;
       }else{
-        if(isencition != array_vopros_destvie1_2.length){
+        if(isencition !=  widget.array_vopros.length){
         cards.clear();
         // rand_numbers();
         int cacheStat = list[isencition];
         count += 1;
-        cards.add(cards_widgets(player: player_number,name: array_vopros1_2[cacheStat],));
+        cards.add(cards_widgets(player: player_number,name: widget.array_vopros[cacheStat],));
         state_0();
         cards.add(cards_widgets(player: player_number,name: "Правда или Действие ?",));
         isencition++;
@@ -159,7 +181,7 @@ class _page1_2State extends State<page1_2> {
    
   }
 
-void exits(){
+  void exits(){
     setState(() {
       Navigator.pop(context);
     });
@@ -195,13 +217,15 @@ void exits(){
             setState(() {
               _displey_text_dialog(context);
             });
-          }, child: SizedBox(width: MediaQuery.of(context).size.width-20,child: const Text("Добавить"))
+          },style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white,), child: SizedBox(width: MediaQuery.of(context).size.width-20,child:const Center(child: Text("Добавить")))
           ),
           ),
           if(player_numbers > 3) Align(alignment: Alignment.bottomCenter,
           child:OutlinedButton(onPressed: (){setState(() {
             init_player = false;
-          });}, child: SizedBox(width: MediaQuery.of(context).size.width-20,child: const Text("Начать игру"))
+          });}, style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white,),child: SizedBox(width: MediaQuery.of(context).size.width-20,child: const Center(child:Text("Начать игру")))
           ),
           ),
         ],
@@ -209,43 +233,26 @@ void exits(){
     );
   }
 
+  
+
+
   void adds(){
     setState(() {
       if(player_numbers > 5){
-      _showMaterialDialog();
+      Message.show(context, message: 'Превышен лимит пользователей');
      }else{
-      
       _displey_text_dialog(context);
       player_naming_start_game.add(name_player);
-            array_card_listener.add(cards_player(context,"$name_player", player_numbers));
+            array_card_listener.add(cards_player(
+              name:
+            "$name_player",
+            player_number: player_numbers));
             player_numbers += 1;
     }
-      
-      
-  
- 
-
     });
   }
 
-   void _showMaterialDialog() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title:const Text('Оповещение'),
-            content:const Text('К сожалению было добавлено максимум игроков'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child:const Text('Ок'),
-              )
-            ],
-          );
-        });
-  }
+
   Future <void> _displey_text_dialog(BuildContext context){
     return showDialog(context: context, builder:
       (context){
@@ -261,9 +268,12 @@ void exits(){
         actions: [
           TextButton(
                 onPressed: () {
-                  
-                  adds();
-                  Navigator.pop(context);
+                  if(name_player != ''){
+                    adds();
+                  Navigator.of(context).pop();
+                  }else{
+                    Message.show(context, message: 'Имя пользователя не введено');
+                  }
                 },
                 child: Text('Готово'),
               )
@@ -275,14 +285,14 @@ void exits(){
 
 
   void rand_numbers (){
-    var listim = List.generate(array_vopros_destvie1_2.length, (int i) => i);                                                                                     
+    var listim = List.generate(widget.array_vopros_destvie.length, (int i) => i);                                                                                     
     listim.shuffle();       
     for(int i = 0; i < listim.length;i++){
       list2.add(listim[i]);
     }                    
   }
   void rand_numbers2 (){
-    var listim = List.generate(array_vopros1_2.length, (int i) => i);                                                                                     
+    var listim = List.generate(widget.array_vopros.length, (int i) => i);                                                                                     
     listim.shuffle();       
     for(int i =0; i < listim.length;i++){
       list.add(listim[i]);
@@ -319,7 +329,10 @@ void exits(){
 
 
   Widget start_page_view(BuildContext context){
-    return Padding(
+    return AnimatedBackground(
+      vsync: this,
+      behaviour: RandomParticleBehaviour(options: particles),
+      child: Padding(
       padding: const EdgeInsets.only(top: 35, left: 8, right: 8),
       child:init_player ? state_player(context,): Container(
         child: Column(
@@ -379,7 +392,8 @@ void exits(){
                     crug ++;
                   });
                 }
-      ,style: OutlinedButton.styleFrom(
+                ,style: OutlinedButton.styleFrom(
+                 backgroundColor: Colors.white,
                 side:const BorderSide(width: 1.0, color: Colors.black),
               ), child:const  Text("Готово",style: TextStyle(color: Colors.black45, fontSize: 17),),
           ),
@@ -389,6 +403,7 @@ void exits(){
           ],
         ),
       ),
+      )
     );
   }
   Widget start_page(BuildContext context){
@@ -402,18 +417,3 @@ void exits(){
     return start_page(context);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// class _page1_1State extends State<page1_1> {
-
-// }

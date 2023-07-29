@@ -1,8 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui';
+import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:pravda_or_deistvie/screens/game/list.dart';
+import 'package:pravda_or_deistvie/screens/game/gamedata/list.dart';
 import 'package:pravda_or_deistvie/screens/game/sprav.dart';
 import 'package:pravda_or_deistvie/screens/game/card_pages.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -10,22 +11,31 @@ import 'package:pravda_or_deistvie/screens/Home.dart';
 
 
 class page1_1 extends StatefulWidget {
-  const page1_1({super.key});
+  const page1_1({super.key,
+    required this.array_vopros,
+    required this.array_vopros_destvie,
+  });
+  final List<String> array_vopros;
+  final List<String> array_vopros_destvie;
   
   @override
   State<page1_1> createState() => _page1_1State();
 }
 
-
-
-
-
-
-
-
-
-class _page1_1State extends State<page1_1> {
+class _page1_1State extends State<page1_1> with TickerProviderStateMixin {
   final CardSwiperController controller = CardSwiperController();
+  ParticleOptions particles = const ParticleOptions(
+        baseColor: Colors.blueAccent,
+        spawnOpacity: 0.0,
+        opacityChangeRate: 0.1,
+        minOpacity: 0.9,
+        maxOpacity: 0.9,
+        particleCount: 70,
+        spawnMaxRadius: 15.0,
+        spawnMaxSpeed: 100.0,
+        spawnMinSpeed: 30,
+        spawnMinRadius: 7.0,
+      );
   
   math.Random random = new math.Random();
   var array_deistvie = [""];
@@ -87,13 +97,13 @@ class _page1_1State extends State<page1_1> {
       if(crug < 2){
         crug += 1;
       }else{
-        if(isencition != array_vopros_destvie1_1.length){
+        if(isencition != widget.array_vopros_destvie.length){
           state_0();
           // rand_numbers2();
           int cacheStat = list2[isencition];
           cards.clear();
           count += 1;
-          cards.add(cards_widgets(player:player_number,name:array_vopros_destvie1_1[cacheStat],));
+          cards.add(cards_widgets(player:player_number,name:widget.array_vopros_destvie[cacheStat],));
           state_0();
           cards.add(cards_widgets(player: player_number,name: "Правда или Действие ?",));
           isencition++;
@@ -116,12 +126,12 @@ class _page1_1State extends State<page1_1> {
       if(crug < 2){
         crug += 1;
       }else{
-        if(isencition != array_vopros1_1.length){
+        if(isencition != widget.array_vopros.length){
         cards.clear();
         // rand_numbers();
         int cacheStat = list[isencition];
         count += 1;
-        cards.add(cards_widgets(player: player_number,name: array_vopros1_1[cacheStat],));
+        cards.add(cards_widgets(player: player_number,name: widget.array_vopros[cacheStat],));
         state_0();
         cards.add(cards_widgets(player: player_number,name: "Правда или Действие ?",));
         isencition++;
@@ -145,14 +155,14 @@ class _page1_1State extends State<page1_1> {
   }
 
    void rand_numbers (){
-    var listim = List.generate(array_vopros_destvie1_1.length, (int i) => i);                                                                                     
+    var listim = List.generate(widget.array_vopros_destvie.length, (int i) => i);                                                                                     
     listim.shuffle();       
     for(int i = 0; i < listim.length;i++){
       list2.add(listim[i]);
     }                    
   }
   void rand_numbers2 (){
-    var listim = List.generate(array_vopros1_1.length, (int i) => i);                                                                                     
+    var listim = List.generate(widget.array_vopros.length, (int i) => i);                                                                                     
     listim.shuffle();       
     for(int i =0; i < listim.length;i++){
       list.add(listim[i]);
@@ -182,7 +192,10 @@ class _page1_1State extends State<page1_1> {
 
 
   Widget start_page_view(BuildContext context){
-    return Padding(
+    return AnimatedBackground(
+      vsync: this,
+      behaviour: RandomParticleBehaviour(options: particles),
+      child: Padding(
       padding: const EdgeInsets.only(top: 35, left: 8, right: 8),
       child: Container(
         child: Column(
@@ -243,13 +256,14 @@ class _page1_1State extends State<page1_1> {
                 }
       ,style: OutlinedButton.styleFrom(
                 side: BorderSide(width: 1.0, color: Colors.black),
-              ), child:  Text("Готово",style: TextStyle(color: Colors.black45, fontSize: 17),),
+              backgroundColor: Colors.white), child:  Text("Готово",style: TextStyle(color: Colors.black45, fontSize: 17),),
           ),
         ),
       ),
     
           ],
         ),
+      ),
       ),
     );
   }

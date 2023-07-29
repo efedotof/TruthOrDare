@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   PageController controller = PageController();
   bool isExitval = false;
   bool isVar = false;
-  late var adUnitId = 'R-M-2549443-3';
+  late var adUnitId = '';
   late RewardedAd? _ad_rewerded;
   bool isAdLoaded = false;
   bool isLoading = false;

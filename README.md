@@ -11,22 +11,23 @@ The gameplay is filled with a sea of laughter, excitement and intrigue, as parti
 <a href='https://apps.rustore.ru/app/com.efedotov.pravda_or_deistvie?utm_source=rustore_inner'>RuStore</a>
 <h1>~Image~</h1>
 <p>
-    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-35-06.jpg"  height="240" />
+    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-35-06.jpg" />
 </p>
 <p>
-    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-54.jpg" width="220" height="240" />
-</p>
-
-<p>
-    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53.jpg" width="220" height="240" />
+    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-54.jpg" />
 </p>
 
 <p>
-    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53%20(3).jpg" width="220" height="240" />
+    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53.jpg"=
+/>
 </p>
 
 <p>
-    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53%20(2).jpg" width="220" height="240" />
+    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53%20(3).jpg" />
+</p>
+
+<p>
+    <img src="https://github.com/efedotof/TruthOrDare/blob/main/lib/assets/photo_2023-07-27_17-29-53%20(2).jpg" />
 </p>
 
 

@@ -7,5 +7,5 @@ The gameplay is filled with a sea of laughter, excitement and intrigue, as parti
 
 "Truth or Action: The Truth behind the Game" is a unique opportunity to spend time with friends or family, get to know each other better and look into the very depths of their personalities. Get ready for an entertaining dive into the world of candid revelations and exciting adventures!
 <h1>~Download~</h1>
-~Android~
+<p>~Android~</p>
 <a href='https://apps.rustore.ru/app/com.efedotov.pravda_or_deistvie?utm_source=rustore_inner'>RuStore</a>
